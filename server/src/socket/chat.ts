@@ -12,5 +12,6 @@ export const chatSocket = (io: Server, socket: Socket) => {
 
   socket.on("disconneect", () => {
     console.log("User disconnected", user);
+    io.emit("chat", `User disconnected ${user}`)
   });
 };

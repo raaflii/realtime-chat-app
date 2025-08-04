@@ -1,4 +1,4 @@
-import server from "./app.ts";
+import server from "../src/app.ts";
 import { connectDB } from "./config/db.ts";
 import dotenv from "dotenv";
 dotenv.config();

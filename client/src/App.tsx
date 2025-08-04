@@ -64,7 +64,16 @@ const ChatExample = () => {
   };
 
   return (
-    <div style={{ position: "relative", height: "70vh", width: "512px" }}>
+    <div
+      style={{
+        height: "98vh",
+        width: "512px",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
+    >
       <MainContainer>
         <ChatContainer>
           <MessageList>
@@ -72,7 +81,7 @@ const ChatExample = () => {
               <Message key={i} model={m} />
             ))}
           </MessageList>
-          <MessageInput placeholder="Type message here" onSend={handleSend} />
+          <MessageInput placeholder="Type message here" onSend={handleSend} attachDisabled/>
         </ChatContainer>
       </MainContainer>
     </div>

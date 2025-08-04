@@ -5,13 +5,30 @@ export const chatSocket = (io: Server, socket: Socket) => {
   const user = socket.id;
   console.log("User connected", user);
 
-  socket.on("chat", async (msg: string) => {
-    const savedChat = await Message.create({ user, text: msg });
-    io.emit("chat", savedChat);
+  socket.on("chat", async (msg: { message: string; sender: string }) => {
+    try {
+      const savedChat = await Message.create({
+        user: msg.sender || user,
+        message: msg.message
+      });
+
+      io.emit("chat", {
+        sender: savedChat.user,
+        message: savedChat.message,
+        sentTime: savedChat.timestamp
+      });
+    } catch (err) {
+      console.error("Error saving message:", err);
+    }
   });
 
-  socket.on("disconneect", () => {
+  socket.on("disconnect", () => {
     console.log("User disconnected", user);
-    io.emit("chat", `User disconnected ${user}`)
+    io.emit("chat", {
+      sender: "System",
+      message: `User ${user} disconnected`,
+      sentTime: new Date()
+    });
   });
 };
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MainContainer,
   ChatContainer,
@@ -9,8 +9,7 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 import { io, Socket } from "socket.io-client";
 
-// Buat koneksi socket
-const socket: Socket = io("http://localhost:3000");
+const socket: Socket = io(import.meta.env.VITE_SOCKET_URI);
 
 const ChatExample = () => {
   const [messages, setMessages] = useState<MessageModel[]>([]);
@@ -25,7 +24,6 @@ const ChatExample = () => {
     socket.on(
       "chat",
       (msg: { message: string; sender: string; sentTime: string }) => {
-        console.log(msg.sender, socketId)
         if (msg.sender === socketId) return;
 
         const incomingMsg: MessageModel = {
